@@ -9,14 +9,18 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function extrairFrequencia(texto) {
-  const regex = /([A-Za-zÀ-ÿ\s]+)\s+(\d{1,3})%/g;
+  const regex = /([A-ZÀ-ÿ\s]+)\d+\s+FUNDAMENTOS[\s\S]*?Matriculad\s+(\d{1,3},\d{2})/gi;
   let match;
   const alunos = [];
   while ((match = regex.exec(texto)) !== null) {
-    alunos.push({ nome: match[1].trim(), frequencia: parseInt(match[2], 10) });
+    alunos.push({
+      nome: match[1].trim(),
+      frequencia: parseFloat(match[2].replace(',', '.')),
+    });
   }
   return alunos;
 }
+
 
 function calcularMedia(alunos) {
   if (alunos.length === 0) return 0;
