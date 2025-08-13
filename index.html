@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ranking</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <h1 class="brand">Ranking da Turma</h1>
+      <nav>
+        <a class="btn" href="admin.html">Área Administrativa</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card">
+      <div class="card-head">
+        <div>
+          <h2 id="tituloTurma">Ranking</h2>
+          <p id="subInfo" class="muted">Carregando dados salvos…</p>
+        </div>
+        <div class="actions">
+          <button id="btnExport" class="btn" type="button">Exportar CSV</button>
+          <button id="btnLimpar" class="btn btn-ghost" type="button">Limpar dados</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="tabelaRanking">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>% Frequência</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="3" class="muted">Nenhum dado salvo. Vá até a Área Administrativa e faça upload de um PDF.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer class="container muted small">Dados armazenados localmente neste navegador.</footer>
+  <script src="common.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const dados = loadRankingFromStorage();
+      renderRanking(dados);
+      const meta = loadMetaFromStorage();
+      const titulo = document.getElementById('tituloTurma');
+      const sub = document.getElementById('subInfo');
+      if (meta?.turma) titulo.textContent = `Ranking — ${meta.turma}`;
+      if (meta?.atualizadoEm) sub.textContent = `Atualizado em ${meta.atualizadoEm}`;
+      else sub.textContent = 'Nenhum dado encontrado.';
+      document.getElementById('btnExport').addEventListener('click', () => exportCSV());
+      document.getElementById('btnLimpar').addEventListener('click', () => {
+        if (confirm('Remover dados salvos deste navegador?')) {
+          clearStorage();
+          renderRanking([]);
+          sub.textContent = 'Nenhum dado encontrado.';
+          titulo.textContent = 'Ranking';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

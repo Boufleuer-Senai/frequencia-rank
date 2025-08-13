@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Administração — Ranking</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <h1 class="brand">Administração</h1>
+      <nav>
+        <a class="btn" href="index.html">Voltar ao Ranking</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card" id="loginCard">
+      <h2>Acesso restrito</h2>
+      <form id="loginForm" class="grid">
+        <div class="field">
+          <label for="senha">Senha</label>
+          <input id="senha" type="password" autocomplete="current-password" required />
+        </div>
+        <button class="btn" type="submit">Entrar</button>
+      </form>
+      <p class="muted small">Senha padrão: <code>admin123</code> (altere em <em>admin.js</em>).</p>
+    </section>
+    <section class="card" id="uploadCard" style="display:none;">
+      <div class="card-head">
+        <div>
+          <h2>Upload do PDF</h2>
+          <p class="muted">Envie o PDF padronizado (ex.: “FREQ T5 4° CICLO.pdf”).</p>
+        </div>
+        <div class="actions">
+          <button id="btnSalvar" class="btn" type="button" disabled>Salvar no navegador</button>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="field">
+          <label for="pdfFile">Arquivo PDF</label>
+          <input id="pdfFile" type="file" accept="application/pdf" />
+        </div>
+      </div>
+      <details class="mt">
+        <summary>Pré-visualização (dados extraídos)</summary>
+        <div class="table-wrap">
+          <table id="previewTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>% Frequência</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="3" class="muted">Nenhum dado extraído ainda.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.worker.min.js';
+  </script>
+  <script src="common.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
